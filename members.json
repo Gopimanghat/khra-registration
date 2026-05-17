@@ -1,0 +1,299 @@
+[
+  {
+    "id": 1,
+    "owner_name": "adfsdads",
+    "establishment_name": "ads",
+    "establishment_address": "asd",
+    "building_number": "12",
+    "ward": "21",
+    "post_office": "ads",
+    "taluk": "asd",
+    "district": "Kannur",
+    "pincode": "123456",
+    "phone": "1232121231",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "safd",
+    "fssai_licence": "asd",
+    "owner_address": "das",
+    "year_established": "1234",
+    "establishment_type": [
+      "Tourist Home"
+    ],
+    "role": [
+      "Managing Director"
+    ],
+    "ac_status": "Non-AC",
+    "lodge_rooms": "1",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "0",
+    "photo_path": "uploads\\1777431611949_logo-03.cc5e5332.png",
+    "created_at": "2026-04-29T03:00:11.968Z"
+  },
+  {
+    "id": 2,
+    "owner_name": "ads",
+    "establishment_name": "asd",
+    "establishment_address": "asdads",
+    "building_number": "123",
+    "ward": "12",
+    "post_office": "asdasd",
+    "taluk": "asdad",
+    "district": "Palakkad",
+    "pincode": "123321",
+    "phone": "123456543",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "zccx",
+    "fssai_licence": "1234",
+    "owner_address": "asdasd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Restaurant"
+    ],
+    "role": [
+      "Managing Director"
+    ],
+    "ac_status": "Partial AC",
+    "lodge_rooms": "2",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "2",
+    "photo_path": "uploads\\1777432410842_download.png",
+    "created_at": "2026-04-29T03:13:30.862Z"
+  },
+  {
+    "id": 3,
+    "owner_name": "asd",
+    "establishment_name": "ads",
+    "establishment_address": "adsads",
+    "building_number": "123",
+    "ward": "21",
+    "post_office": "asd",
+    "taluk": "asd",
+    "district": "Kannur",
+    "pincode": "122331",
+    "phone": "123123123",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "asda",
+    "fssai_licence": "12312",
+    "owner_address": "asd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Tourist Home"
+    ],
+    "role": [
+      "Managing Director"
+    ],
+    "ac_status": "Partial AC",
+    "lodge_rooms": "12",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "211",
+    "photo_path": "uploads\\1777432655125_isolated-linkedin-logo-vector-illustration-icon-minsk-belarus-march-142909970 (1).webp",
+    "created_at": "2026-04-29T03:17:35.143Z"
+  },
+  {
+    "id": 4,
+    "owner_name": "adsads",
+    "establishment_name": "asd",
+    "establishment_address": "asd",
+    "building_number": "12",
+    "ward": "21",
+    "post_office": "asd",
+    "taluk": "asd",
+    "district": "Kozhikode",
+    "pincode": "111111",
+    "phone": "1111111112",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "21",
+    "fssai_licence": "ads12",
+    "owner_address": "asd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Tourist Home"
+    ],
+    "role": [
+      "Managing Partner"
+    ],
+    "ac_status": "Non-AC",
+    "lodge_rooms": "110",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "21",
+    "photo_path": "uploads\\1777432949372_download.png",
+    "created_at": "2026-04-29T03:22:29.405Z"
+  },
+  {
+    "id": 5,
+    "owner_name": "ads",
+    "establishment_name": "ads",
+    "establishment_address": "asd",
+    "building_number": "1231",
+    "ward": "123",
+    "post_office": "asd",
+    "taluk": "adsad",
+    "district": "Wayanad",
+    "pincode": "111111",
+    "phone": "111111111111111",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "adsa",
+    "fssai_licence": "a112",
+    "owner_address": "asd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Food Production"
+    ],
+    "role": [
+      "Managing Director"
+    ],
+    "ac_status": "Partial AC",
+    "lodge_rooms": "123",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "321",
+    "photo_path": "uploads\\1777433225177_peoje.jpeg",
+    "created_at": "2026-04-29T03:27:05.205Z"
+  },
+  {
+    "id": 6,
+    "owner_name": "asddsa",
+    "establishment_name": "ads",
+    "establishment_address": "ads",
+    "building_number": "12",
+    "ward": "21",
+    "post_office": "ads",
+    "taluk": "ads",
+    "district": "Palakkad",
+    "pincode": "111111",
+    "phone": "111111111111",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "123",
+    "fssai_licence": "12312",
+    "owner_address": "asdd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Tourist Home"
+    ],
+    "role": [
+      "Managing Director"
+    ],
+    "ac_status": "Non-AC",
+    "lodge_rooms": "211",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "21",
+    "photo_path": "uploads\\1777433388627_Screenshot 2024-11-09 071254.png",
+    "created_at": "2026-04-29T03:29:48.668Z"
+  },
+  {
+    "id": 7,
+    "owner_name": "asdads",
+    "establishment_name": "asd",
+    "establishment_address": "asd",
+    "building_number": "",
+    "ward": "",
+    "post_office": "",
+    "taluk": "",
+    "district": "Kannur",
+    "pincode": "",
+    "phone": "",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "asd",
+    "fssai_licence": "12122",
+    "owner_address": "asd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Restaurant"
+    ],
+    "role": [
+      "Managing Director"
+    ],
+    "ac_status": "Partial AC",
+    "lodge_rooms": "12",
+    "restaurant_type": [
+      "Veg"
+    ],
+    "seating_capacity": "21",
+    "photo_path": "uploads\\1777433611061_peoje.jpeg",
+    "created_at": "2026-04-29T03:33:31.095Z"
+  },
+  {
+    "id": 8,
+    "owner_name": "asda",
+    "establishment_name": "asd",
+    "establishment_address": "",
+    "building_number": "",
+    "ward": "",
+    "post_office": "",
+    "taluk": "",
+    "district": "Kannur",
+    "pincode": "111111",
+    "phone": "111111111111",
+    "mobile": "",
+    "email": "",
+    "licence_receipt_number": "212",
+    "fssai_licence": "2121",
+    "owner_address": "sadd",
+    "year_established": "1900",
+    "establishment_type": [
+      "Tourist Home"
+    ],
+    "role": [
+      "Managing Partner"
+    ],
+    "ac_status": "Non-AC",
+    "lodge_rooms": "12",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "21",
+    "photo_path": "uploads\\1777433758347_peoje.jpeg",
+    "created_at": "2026-04-29T03:35:58.373Z"
+  },
+  {
+    "id": 9,
+    "owner_name": "adsdssda",
+    "establishment_name": "asdfs",
+    "establishment_address": "sadsf",
+    "building_number": "123",
+    "ward": "123",
+    "post_office": "sadf",
+    "taluk": "adssf",
+    "district": "Thrissur",
+    "pincode": "111111",
+    "phone": "12345543212",
+    "mobile": "2121212121",
+    "email": "",
+    "licence_receipt_number": "212",
+    "fssai_licence": "21",
+    "owner_address": "xzcv",
+    "year_established": "123",
+    "establishment_type": [
+      "Hotel"
+    ],
+    "role": [
+      "Licencee"
+    ],
+    "ac_status": "AC",
+    "lodge_rooms": "18",
+    "restaurant_type": [
+      "Non-Veg"
+    ],
+    "seating_capacity": "20",
+    "photo_path": "uploads\\1778989357821_Screenshot 2026-05-15 184948.png",
+    "created_at": "2026-05-17T03:42:37.831Z"
+  }
+]
