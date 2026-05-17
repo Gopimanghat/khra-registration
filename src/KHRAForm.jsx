@@ -1,4 +1,5 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL
 
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqY2F2Z3FtcGhvcmVtY3d5Ym1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjQyMDEsImV4cCI6MjA5NDU0MDIwMX0.78WLXqWDpaBYrWzRpyeYDoV2C-ixRRaWs2kAioqlO6g";
 
@@ -255,7 +256,7 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
         if (photo) formData.append("photo", photo);
         if (licence) formData.append("licence", licence);
 
-        const res = await fetch("http://localhost:3001/submit", {
+        const res = await fetch("${API_URL}/submit", {
           method: "POST",
           body: formData,
         });
@@ -297,8 +298,8 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
           </p>
           <p className="text-gray-400 mb-6 text-sm">{form.establishment_name}</p>
           <a href={isEditMode
-    ? `http://localhost:3001/regenerate-pdf/${editData?.id}`
-    : `http://localhost:3001/pdf/${memberId}`}
+    ? `${API_URL}/regenerate-pdf/${editData?.id}`
+    : `${API_URL}/pdf/${memberId}`}
   target="_blank" download>
   <button className="w-full mb-3 px-6 py-3 rounded-xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition-all shadow-md shadow-orange-100">
     📄 Download Filled PDF

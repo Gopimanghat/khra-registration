@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+const API_URL = import.meta.env.VITE_API_URL
 
-const SUPABASE_URL = "https://vjcavgqmphoremcwybmk.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqY2F2Z3FtcGhvcmVtY3d5Ym1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjQyMDEsImV4cCI6MjA5NDU0MDIwMX0.78WLXqWDpaBYrWzRpyeYDoV2C-ixRRaWs2kAioqlO6g";
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || "admin@khra.com";
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "khra@2024";
@@ -257,7 +258,7 @@ export default function AdminPanel({ onBack, onEdit }) {
     className="px-3 py-1 rounded-lg bg-blue-50 text-blue-600 text-xs font-medium hover:bg-blue-100 transition-all border border-blue-100">
     ✏️ Edit
   </button>
-  <a href={`http://localhost:3001/regenerate-pdf/${m.id}`} target="_blank" download>
+  href={`${API_URL}/regenerate-pdf/${m.id}`} <a  target="_blank" download>
     <button className="px-3 py-1 rounded-lg bg-green-50 text-green-600 text-xs font-medium hover:bg-green-100 transition-all border border-green-100">
       📄 PDF
     </button>
