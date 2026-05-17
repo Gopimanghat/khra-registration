@@ -109,12 +109,47 @@ app.post('/submit', uploadFields, async (req, res) => {
     const jsonData = JSON.stringify(memberWithCombined).replace(/"/g, '\\"')
     const cmd = `python api/fill_pdf.py "${jsonData}" "Primary_Membership_Form (1) (2).pdf" "${outputPdf}" "${localPhotoPath}"`
 
-    exec(cmd, (err) => {
-      if (err) console.error('PDF error:', err)
-      else console.log(`PDF generated: ${outputPdf}`)
-    })
-
-    res.json({ success: true, id: member.id })
+    exec(cmd, async (err) => {
+        if (err) {
+          console.error('PDF error:', err)
+        } else {
+          try {
+            // Upload PDF to Supabase Storage
+            const pdfBuffer = fs.readFileSync(outputPdf)
+            const pdfFileName = `member_${member.id}.pdf`
+            const pdfUploadRes = await fetch(
+              `${SUPABASE_URL}/storage/v1/object/pdfs/${pdfFileName}`,
+              {
+                method: 'POST',
+                headers: {
+                  'apikey': SUPABASE_ANON_KEY,
+                  'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                  'Content-Type': 'application/pdf',
+                },
+                body: pdfBuffer,
+              }
+            )
+            if (pdfUploadRes.ok) {
+              const pdf_url = `${SUPABASE_URL}/storage/v1/object/public/pdfs/${pdfFileName}`
+              // Save PDF URL to member record
+              await fetch(`${SUPABASE_URL}/rest/v1/members?id=eq.${member.id}`, {
+                method: 'PATCH',
+                headers: {
+                  'apikey': SUPABASE_ANON_KEY,
+                  'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pdf_url }),
+              })
+              console.log(`PDF uploaded to Supabase: ${pdf_url}`)
+            }
+          } catch (e) {
+            console.error('PDF upload error:', e)
+          }
+        }
+      })
+      
+      res.json({ success: true, id: member.id })
 
   } catch (err) {
     console.error(err)
@@ -123,14 +158,26 @@ app.post('/submit', uploadFields, async (req, res) => {
 })
 
 // Download filled PDF
-app.get('/pdf/:id', (req, res) => {
-  const file = `outputs/member_${req.params.id}.pdf`
-  if (fs.existsSync(file)) {
-    res.download(file)
-  } else {
-    res.status(404).json({ error: 'PDF not found yet, please wait a moment.' })
-  }
-})
+app.get('/pdf/:id', async (req, res) => {
+    try {
+      const fetchRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/members?id=eq.${req.params.id}&select=pdf_url`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          }
+        }
+      )
+      const members = await fetchRes.json()
+      if (!members.length || !members[0].pdf_url) {
+        return res.status(404).json({ error: 'PDF not found yet, please wait a moment.' })
+      }
+      res.redirect(members[0].pdf_url)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  })
 
 
 // Regenerate PDF for existing member
@@ -181,7 +228,36 @@ app.get('/regenerate-pdf/:id', async (req, res) => {
           console.error('PDF error:', err)
           return res.status(500).json({ error: 'PDF generation failed' })
         }
-        res.download(outputPdf)
+        try {
+            const pdfBuffer = fs.readFileSync(outputPdf)
+            const pdfFileName = `member_${id}.pdf`
+            const pdfUploadRes = await fetch(
+              `${SUPABASE_URL}/storage/v1/object/pdfs/${pdfFileName}`,
+              {
+                method: 'POST',
+                headers: {
+                  'apikey': SUPABASE_ANON_KEY,
+                  'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                  'Content-Type': 'application/pdf',
+                  'x-upsert': 'true',
+                },
+                body: pdfBuffer,
+              }
+            )
+            const pdf_url = `${SUPABASE_URL}/storage/v1/object/public/pdfs/${pdfFileName}`
+            await fetch(`${SUPABASE_URL}/rest/v1/members?id=eq.${id}`, {
+              method: 'PATCH',
+              headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ pdf_url }),
+            })
+            res.redirect(pdf_url)
+          } catch(e) {
+            res.status(500).json({ error: e.message })
+          }
       })
   
     } catch (err) {
