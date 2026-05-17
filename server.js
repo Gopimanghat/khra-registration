@@ -4,7 +4,7 @@ import multer from 'multer'
 import fs from 'fs'
 import { exec } from 'child_process'
 import fetch from 'node-fetch'
-const API_URL = import.meta.env.VITE_API_URL
+
 
 const app = express()
 app.use(cors())
