@@ -223,7 +223,7 @@ app.get('/regenerate-pdf/:id', async (req, res) => {
       const jsonData = JSON.stringify(memberWithCombined).replace(/"/g, '\\"')
       const cmd = `python api/fill_pdf.py "${jsonData}" "Primary_Membership_Form (1) (2).pdf" "${outputPdf}" "${localPhotoPath}"`
   
-      exec(cmd, (err) => {
+      exec(cmd, async (err) => {
         if (err) {
           console.error('PDF error:', err)
           return res.status(500).json({ error: 'PDF generation failed' })
