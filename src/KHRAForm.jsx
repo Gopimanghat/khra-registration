@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-const API_URL = "https://khra-registration.onrender.com"
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqY2F2Z3FtcGhvcmVtY3d5Ym1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjQyMDEsImV4cCI6MjA5NDU0MDIwMX0.78WLXqWDpaBYrWzRpyeYDoV2C-ixRRaWs2kAioqlO6g";
+const API_URL = import.meta.env.VITE_API_URL
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+
 const DISTRICTS = [
   "Thiruvananthapuram", "Kollam", "Pathanamthitta", "Alappuzha",
   "Kottayam", "Idukki", "Ernakulam", "Thrissur", "Palakkad",
