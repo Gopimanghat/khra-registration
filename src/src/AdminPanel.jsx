@@ -257,7 +257,7 @@ export default function AdminPanel({ onBack, onEdit }) {
     className="px-3 py-1 rounded-lg bg-blue-50 text-blue-600 text-xs font-medium hover:bg-blue-100 transition-all border border-blue-100">
     ✏️ Edit
   </button>
-  href={`${API_URL}/regenerate-pdf/${m.id}`} <a  target="_blank" download>
+  <a href={m.pdf_url || `${API_URL}/regenerate-pdf/${m.id}`} target="_blank" download>
     <button className="px-3 py-1 rounded-lg bg-green-50 text-green-600 text-xs font-medium hover:bg-green-100 transition-all border border-green-100">
       📄 PDF
     </button>

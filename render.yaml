@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: khra-backend
+    name: khra-registration
     runtime: node
-    buildCommand: npm install && pip install pypdf reportlab
+    buildCommand: npm install && pip3 install pypdf reportlab
     startCommand: node server.js
