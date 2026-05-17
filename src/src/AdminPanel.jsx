@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-const API_URL = "https://YOUR-RENDER-URL.onrender.com"
-
-const SUPABASE_URL = "https://vjcavgqmphoremcwybmk.supabase.co"
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqY2F2Z3FtcGhvcmVtY3d5Ym1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjQyMDEsImV4cCI6MjA5NDU0MDIwMX0.78WLXqWDpaBYrWzRpyeYDoV2C-ixRRaWs2kAioqlO6g"
-
+const API_URL = "https://khra-registration.onrender.com"
+const SUPABASE_URL = "https://vjcavgqmphoremcwybmk.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqY2F2Z3FtcGhvcmVtY3d5Ym1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjQyMDEsImV4cCI6MjA5NDU0MDIwMX0.78WLXqWDpaBYrWzRpyeYDoV2C-ixRRaWs2kAioqlO6g";
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || "admin@khra.com";
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "khra@2024";
 
