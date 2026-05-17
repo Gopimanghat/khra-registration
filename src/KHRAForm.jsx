@@ -255,7 +255,7 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
         if (photo) formData.append("photo", photo);
         if (licence) formData.append("licence", licence);
 
-        const res = await fetch("${API_URL}/submit", {
+        const res = await fetch(`${API_URL}submit`, { 
           method: "POST",
           body: formData,
         });
