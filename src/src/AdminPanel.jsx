@@ -1,4 +1,9 @@
 import { useState, useEffect } from "react";
+import * as XLSX from 'xlsx';
+
+
+
+
 const API_URL = import.meta.env.VITE_API_URL
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -94,6 +99,112 @@ export default function AdminPanel({ onBack, onEdit }) {
     }
   };
 
+  const handleExport = () => {
+    const exportData = members.map((m, i) => ({
+      "#": i + 1,
+      "Owner Name": m.owner_name || "",
+      "Establishment Name": m.establishment_name || "",
+      "Address": m.establishment_address || "",
+      "Building No": m.building_number || "",
+      "Ward": m.ward || "",
+      "Post Office": m.post_office || "",
+      "Taluk": m.taluk || "",
+      "District": m.district || "",
+      "PIN Code": m.pincode || "",
+      "Phone": m.phone || "",
+      "Mobile": m.mobile || "",
+      "Email": m.email || "",
+      "Licence / Receipt No": m.licence_receipt_number || "",
+      "FSSAI Licence": m.fssai_licence || "",
+      "Owner Address": m.owner_address || "",
+      "Year Established": m.year_established || "",
+      "Establishment Type": (m.establishment_type || []).join(", "),
+      "Role": (m.role || []).join(", "),
+      "AC Status": m.ac_status || "",
+      "Lodge Rooms": m.lodge_rooms || "",
+      "Restaurant Type": (m.restaurant_type || []).join(", "),
+      "Seating Capacity": m.seating_capacity || "",
+      "Registered On": new Date(m.created_at).toLocaleDateString('en-IN'),
+    }));
+  
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "KHRA Members");
+  
+    // Column widths
+    ws['!cols'] = [
+      { wch: 4 },   // #
+      { wch: 20 },  // Owner Name
+      { wch: 25 },  // Establishment Name
+      { wch: 35 },  // Address
+      { wch: 12 },  // Building No
+      { wch: 10 },  // Ward
+      { wch: 15 },  // Post Office
+      { wch: 12 },  // Taluk
+      { wch: 15 },  // District
+      { wch: 10 },  // PIN Code
+      { wch: 13 },  // Phone
+      { wch: 13 },  // Mobile
+      { wch: 25 },  // Email
+      { wch: 20 },  // Licence
+      { wch: 20 },  // FSSAI
+      { wch: 35 },  // Owner Address
+      { wch: 10 },  // Year
+      { wch: 25 },  // Est Type
+      { wch: 25 },  // Role
+      { wch: 12 },  // AC
+      { wch: 12 },  // Lodge Rooms
+      { wch: 15 },  // Restaurant Type
+      { wch: 15 },  // Seating
+      { wch: 15 },  // Registered On
+    ];
+  
+    // Freeze header row
+    ws['!freeze'] = { xSplit: 0, ySplit: 1 };
+  
+    // Style header row
+    const headerKeys = Object.keys(exportData[0]);
+    headerKeys.forEach((key, col) => {
+      const cellRef = XLSX.utils.encode_cell({ r: 0, c: col });
+      if (!ws[cellRef]) return;
+      ws[cellRef].s = {
+        font: { bold: true, color: { rgb: "FFFFFF" }, sz: 11 },
+        fill: { fgColor: { rgb: "C2410C" } }, // orange-700
+        alignment: { horizontal: "center", vertical: "center", wrapText: true },
+        border: {
+          top: { style: "thin", color: { rgb: "000000" } },
+          bottom: { style: "thin", color: { rgb: "000000" } },
+          left: { style: "thin", color: { rgb: "000000" } },
+          right: { style: "thin", color: { rgb: "000000" } },
+        }
+      };
+    });
+  
+    // Style data rows
+    exportData.forEach((row, rowIdx) => {
+      headerKeys.forEach((key, col) => {
+        const cellRef = XLSX.utils.encode_cell({ r: rowIdx + 1, c: col });
+        if (!ws[cellRef]) return;
+        ws[cellRef].s = {
+          font: { sz: 10 },
+          fill: { fgColor: { rgb: rowIdx % 2 === 0 ? "FFF7ED" : "FFFFFF" } },
+          alignment: { vertical: "center", wrapText: true },
+          border: {
+            top: { style: "thin", color: { rgb: "E5E7EB" } },
+            bottom: { style: "thin", color: { rgb: "E5E7EB" } },
+            left: { style: "thin", color: { rgb: "E5E7EB" } },
+            right: { style: "thin", color: { rgb: "E5E7EB" } },
+          }
+        };
+      });
+    });
+  
+    // Row height for header
+    ws['!rows'] = [{ hpt: 30 }];
+  
+    XLSX.writeFile(wb, `KHRA_Members_${new Date().toLocaleDateString('en-IN').replace(/\//g, '-')}.xlsx`, { cellStyles: true });
+  };
+
   // ── Login Screen ──────────────────────────────────────────────
   if (!loggedIn) {
     return (
@@ -184,6 +295,15 @@ export default function AdminPanel({ onBack, onEdit }) {
 
           {/* Search & Filter */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-4 flex flex-col sm:flex-row gap-3">
+          {/* Export Button */}
+<div className="flex justify-end mb-3">
+  <button
+    onClick={handleExport}
+    className="px-5 py-2.5 rounded-xl bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition-all shadow-md shadow-green-100 flex items-center gap-2"
+  >
+    📥 Export to Excel
+  </button>
+</div>
             <input type="text" value={search} onChange={e => setSearch(e.target.value)}
               placeholder="🔍  Search by name, hotel, mobile, email, licence..."
               className="flex-1 px-4 py-2.5 rounded-xl border-2 border-gray-100 bg-gray-50 text-sm focus:outline-none focus:border-orange-400 focus:bg-white transition-all" />
