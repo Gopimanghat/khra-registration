@@ -13,8 +13,8 @@ const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
 const DISTRICTS = ["Thiruvananthapuram","Kollam","Pathanamthitta","Alappuzha","Kottayam","Idukki","Ernakulam","Thrissur","Palakkad","Malappuram","Kozhikode","Wayanad","Kannur","Kasaragod"];
 
 async function fetchMembers() {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/members?select=*&order=created_at.desc`, {
-    headers: {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/members?select=*&order=created_at.asc`, {
+  headers: {
       "apikey": SUPABASE_ANON_KEY,
       "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
     },
