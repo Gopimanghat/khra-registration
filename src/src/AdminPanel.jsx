@@ -36,8 +36,7 @@ async function deleteMember(id) {
   if (!res.ok) throw new Error(await res.text());
 }
 
-export default function AdminPanel({ onBack, onEdit }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+export default function AdminPanel({ onBack, onEdit, loggedIn, onLogin, onLogout }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -50,7 +49,7 @@ export default function AdminPanel({ onBack, onEdit }) {
 
   const handleLogin = () => {
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      setLoggedIn(true);
+      onLogin();
       setLoginError("");
     } else {
       setLoginError("Invalid email or password.");
@@ -268,7 +267,7 @@ export default function AdminPanel({ onBack, onEdit }) {
                 className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-500 hover:bg-gray-50 transition-all">
                 ← Form
               </button>
-              <button onClick={() => setLoggedIn(false)} title="Logout"
+              <button onClick={onLogout} title="Logout"
                 className="px-3 py-1.5 rounded-lg bg-red-50 border border-red-100 text-xs text-red-500 hover:bg-red-100 transition-all font-medium">
                 ⏻ Logout
               </button>

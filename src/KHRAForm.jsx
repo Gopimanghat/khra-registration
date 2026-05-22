@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -21,6 +21,46 @@ const ROLES = [
 
 const AC_OPTIONS = ["AC", "Partial AC", "Non-AC"];
 const RESTAURANT_TYPES = ["Veg", "Non-Veg"];
+
+function normalizeToArray(value) {
+  if (Array.isArray(value)) return value;
+  if (value == null || value === "") return [];
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) return parsed;
+    } catch {
+      /* plain string */
+    }
+    return [value];
+  }
+  return [];
+}
+
+function buildFormState(data) {
+  if (!data) {
+    return {
+      owner_name: "", establishment_name: "", establishment_address: "",
+      building_number: "", ward: "", post_office: "", taluk: "", district: "",
+      pincode: "", phone: "", mobile: "", email: "", licence_receipt_number: "",
+      fssai_licence: "", owner_address: "", year_established: "",
+      establishment_type: [], role: [], ac_status: "", lodge_rooms: "",
+      restaurant_type: [], seating_capacity: "", photo: null, licence: null,
+    };
+  }
+  const { photo_url, licence_url, created_at, photo_path, ...rest } = data;
+  return {
+    ...rest,
+    year_established: rest.year_established != null ? String(rest.year_established) : "",
+    lodge_rooms: rest.lodge_rooms != null ? String(rest.lodge_rooms) : "",
+    seating_capacity: rest.seating_capacity != null ? String(rest.seating_capacity) : "",
+    establishment_type: normalizeToArray(rest.establishment_type),
+    role: normalizeToArray(rest.role),
+    restaurant_type: normalizeToArray(rest.restaurant_type),
+    photo: null,
+    licence: null,
+  };
+}
 
 const STEPS = [
   { label: "Establishment", ml: "സ്ഥാപനം", icon: "🏨" },
@@ -106,10 +146,11 @@ function Select({ value, onChange, children }) {
 }
 
 function ChipGroup({ options, selected, onChange, color = "orange" }) {
+  const selectedList = normalizeToArray(selected);
   const toggle = (opt) => {
-    const next = selected.includes(opt)
-      ? selected.filter(x => x !== opt)
-      : [...selected, opt];
+    const next = selectedList.includes(opt)
+      ? selectedList.filter(x => x !== opt)
+      : [...selectedList, opt];
     onChange(next);
   };
   const activeClass = color === "orange"
@@ -120,7 +161,7 @@ function ChipGroup({ options, selected, onChange, color = "orange" }) {
       {options.map(opt => (
         <button key={opt} type="button" onClick={() => toggle(opt)}
           className={`px-3 py-2 rounded-full text-sm border-2 font-medium transition-all
-            ${selected.includes(opt) ? activeClass : "bg-white text-gray-500 border-gray-200 hover:border-orange-300"}`}>
+            ${selectedList.includes(opt) ? activeClass : "bg-white text-gray-500 border-gray-200 hover:border-orange-300"}`}>
           {opt}
         </button>
       ))}
@@ -198,22 +239,23 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
   const isEditMode = !!editData;
 
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState(() => editData ? {
-    ...editData,
-    photo: null,
-    licence: null,
-  } : {
-    owner_name: "", establishment_name: "", establishment_address: "",
-    building_number: "", ward: "", post_office: "", taluk: "", district: "",
-    pincode: "", phone: "", mobile: "", email: "", licence_receipt_number: "",
-    fssai_licence: "", owner_address: "", year_established: "",
-    establishment_type: [], role: [], ac_status: "", lodge_rooms: "",
-    restaurant_type: [], seating_capacity: "", photo: null, licence: null,
-  });
-
+  const [form, setForm] = useState(() => buildFormState(editData));
   const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [memberId, setMemberId] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_URL}/health`).catch(() => {})
+  }, []);
+
+  useEffect(() => {
+    if (editData) {
+      setForm(buildFormState(editData));
+      setStep(0);
+      setErrorMsg("");
+      setStatus("idle");
+    }
+  }, [editData?.id]);
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
@@ -248,7 +290,8 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
           }
         );
         if (!updateRes.ok) throw new Error(await updateRes.text());
-        setStatus("success");
+        onEditDone?.();
+        return;
       } else {
         const formData = new FormData();
         const { photo, licence, ...rest } = form;
@@ -272,14 +315,7 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
   };
 
   const resetForm = () => {
-    setForm({
-      owner_name: "", establishment_name: "", establishment_address: "",
-      building_number: "", ward: "", post_office: "", taluk: "", district: "",
-      pincode: "", phone: "", mobile: "", email: "", licence_receipt_number: "",
-      fssai_licence: "", owner_address: "", year_established: "",
-      establishment_type: [], role: [], ac_status: "", lodge_rooms: "",
-      restaurant_type: [], seating_capacity: "", photo: null, licence: null,
-    });
+    setForm(buildFormState(null));
     setStep(0);
     setStatus("idle");
     setMemberId(null);
@@ -475,7 +511,7 @@ export default function KHRAForm({ onAdminClick, editData, onEditDone }) {
               </div>
               <div>
                 <FieldLabel en="(B) Restaurant Type" ml="(ബി) റസ്റ്റോറന്റ്" />
-                <RadioChip options={RESTAURANT_TYPES} selected={form.restaurant_type?.[0] || ""} onChange={v => set("restaurant_type", [v])} color="blue" />
+                <RadioChip options={RESTAURANT_TYPES} selected={normalizeToArray(form.restaurant_type)[0] || ""} onChange={v => set("restaurant_type", [v])} color="blue" />
               </div>
             </SectionCard>
           )}
